@@ -1,17 +1,17 @@
 import { Card } from "react-bootstrap";
 
-export default function UserCard() {
+export default function UserCard({avatar_url, login, url, type}) {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of
-          the card's content.
-        </Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+    <Card className="h-100 pt-5 rounded-3 user_card">
+      <div className="d-flex justify-content-center">
+        <Card.Img variant="top" src={avatar_url} className="rounded-circle w-50" />
+      </div>
+      <Card.Body className="text-center">
+        <Card.Title className="text-capitalize">{login}</Card.Title>
+        <div className="user_details">
+          <Card.Subtitle>{type}</Card.Subtitle>
+          <Card.Link href={url} target="_blank">Visit Repository</Card.Link>
+        </div>
       </Card.Body>
     </Card>
   )
