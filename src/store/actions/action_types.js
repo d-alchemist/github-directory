@@ -1,5 +1,10 @@
+export const SET_LOADING = 'SET_LOADING';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FETCH_REPOS = 'FETCH_REPOS';
 export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 export const FETCH_REPOS_ERROR = 'FETCH_REPOS_ERROR';
-export const SET_LOADING = 'SET_LOADING';
+export const SEARCH_USERS = 'SEARCH_USERS';
+export const FETCH_MORE_USERS = 'FETCH_MORE_USERS';
+export const GO_TO_NEXT_PAGE = 'GO_TO_NEXT_PAGE';
+export const CLEAR_DATA = 'CLEAR_DATA';
+export const SET_ERROR = 'SET_ERROR';

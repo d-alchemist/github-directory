@@ -1,6 +1,6 @@
+import axios from "axios";
 import { githubAPI } from "../../utils/axios";
 import * as types from "./action_types";
-
 
 export const fetchRepos = () => async (dispatch) => {
   dispatch({type: types.SET_LOADING, payload: true});
@@ -21,11 +21,17 @@ export const fetchRepos = () => async (dispatch) => {
   }
 }
 
-export const fetchUsers = () => async (dispatch) => {
+export const fetchUsers = () => async (dispatch, getState) => {
   dispatch({type: types.SET_LOADING, payload: true});
+
+  const { users: { perPage } } = getState();
+  
   try {
-    const { data } = await githubAPI.get("/users");
-    console.log(data);
+    const { data } = await githubAPI.get("/users", {
+      params: {
+        per_page: perPage, 
+      }
+    });
     dispatch({
       type: types.FETCH_USERS,
       payload: data,
@@ -40,3 +46,58 @@ export const fetchUsers = () => async (dispatch) => {
   }
 }
 
+export const fetchSearchData = (input) => async (dispatch, getState) => {
+  dispatch({type: types.SET_LOADING, payload: true});
+  
+  if (!input) {
+    dispatch({type: types.SET_ERROR, payload: "Please enter search parameter"});
+    return;
+  }
+
+  const { users: { perPage, page } } = getState();
+
+  let cancel;
+
+  try {
+    dispatch({type: types.SET_LOADING, payload: true});
+    const { data: { items } } = await githubAPI.get("/search/users", {
+        params: { q: input, page, perPage },
+        cancelToken: new axios.CancelToken(c => c = cancel),
+      }
+    );
+
+    if (items.length) {
+      dispatch({
+        type: types.SEARCH_USERS,
+        payload: items,
+      });
+    }
+    
+    if (!items.length) {
+      dispatch({type: types.SET_ERROR, payload: "User does not exist"});
+    }
+    
+  } catch(error) {
+    console.error(error);
+  } finally {
+    dispatch({type: types.SET_LOADING, payload: false});
+  }
+}
+
+export const fetchMore = () => {
+  return {
+    type: types.FETCH_MORE_USERS,
+  }
+}
+
+export const goToNextPage = () => {
+  return {
+    type: types.GO_TO_NEXT_PAGE,
+  }
+}
+
+export const clearData = () => {
+  return {
+    type: types.CLEAR_DATA,
+  }
+}
