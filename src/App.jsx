@@ -7,7 +7,7 @@ function App() {
 			<main>
 				<div className="container py-4">
 					<header className="pb-3 mb-4 border-bottom">
-						<h1 className="h4 mb-0">My GitHub Directory</h1>
+						<h1 className="h4 mb-0 text-center">My GitHub Directory</h1>
 					</header>
           <div className="position-relative">
             <div className="p-5 mb-4 bg-light rounded-3">
@@ -17,7 +17,6 @@ function App() {
               </div>
             </div>
           </div>
-
 					<div className="row align-items-md-stretch">
 						<div className="col-md-6">
 							<div className="h-100 p-5 text-white bg-dark rounded-3">

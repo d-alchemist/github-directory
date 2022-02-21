@@ -1,7 +1,7 @@
 import { Suspense, useEffect, lazy, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, FormControl, InputGroup, Row } from 'react-bootstrap';
-import { fetchSearchData, fetchUsers, fetchMore, goToNextPage, clearData } from '../../store/actions';
+import { fetchSearchData, fetchUsers, fetchMore, goToNextPage, clearUserData } from '../../store/actions/userActions';
 import { debounce } from '../../utils/debounce';
 
 const UsersBox = lazy(() => import('../../components/UsersBox'));
@@ -40,13 +40,11 @@ export default function Users() {
   const handleSearch = useCallback((e) => {
     let input = e.target.value;
     setSearchInput(input);
-    dispatch(clearData());
+    dispatch(clearUserData());
     dispatch(fetchSearchData(input));
   }, [dispatch]);
 
   const debouncedOnChange = debounce(handleSearch, 1000);
-
-  const loader = (<h1><i className='bx bx-square-rounded bx-spin bx-rotate-270' ></i></h1>);
 
 	return (
 		<section className="container py-4">
@@ -73,7 +71,7 @@ export default function Users() {
 				</Row>
 			</Container>
       <Container className="d-flex justify-content-center">
-        <Suspense fallback={loader}>
+        <Suspense fallback={<h1><i className='bx bx-square-rounded bx-spin bx-rotate-270' ></i></h1>}>
           <UsersBox loading={loading} users={users} error={error} moreUsersRef={moreUsersRef} />
         </Suspense>
       </Container>

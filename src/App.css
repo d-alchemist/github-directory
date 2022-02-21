@@ -2,16 +2,16 @@
   opacity: 0;
 }
 
-.user_card.card {
+.custom_card.card {
   border: 2px solid aliceblue;
 }
 
-.user_card:hover {
+.custom_card:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   transition: all .3s ease;
   border: 0;
 }
 
-.user_card:hover .user_details {
+.custom_card:hover .user_details {
   opacity: 1;
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { githubAPI } from "../../utils/axios";
 import * as types from "./action_types";
 
@@ -56,13 +55,10 @@ export const fetchSearchData = (input) => async (dispatch, getState) => {
 
   const { users: { perPage, page } } = getState();
 
-  let cancel;
 
   try {
-    dispatch({type: types.SET_LOADING, payload: true});
     const { data: { items } } = await githubAPI.get("/search/users", {
         params: { q: input, page, perPage },
-        cancelToken: new axios.CancelToken(c => c = cancel),
       }
     );
 
@@ -72,12 +68,16 @@ export const fetchSearchData = (input) => async (dispatch, getState) => {
         payload: items,
       });
     }
-    
+
     if (!items.length) {
       dispatch({type: types.SET_ERROR, payload: "User does not exist"});
     }
     
   } catch(error) {
+    dispatch({
+      type: types.FETCH_REPOS_ERROR,
+      payload: error,
+    });
     console.error(error);
   } finally {
     dispatch({type: types.SET_LOADING, payload: false});
@@ -96,8 +96,8 @@ export const goToNextPage = () => {
   }
 }
 
-export const clearData = () => {
+export const clearUserData = () => {
   return {
-    type: types.CLEAR_DATA,
+    type: types.CLEAR_USER_DATA,
   }
 }

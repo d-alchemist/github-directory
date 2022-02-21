@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 
 export default function UserCard({avatar_url, login, url, type}) {
   return (
-    <Card className="h-100 pt-5 rounded-3 user_card">
+    <Card className="h-100 pt-5 rounded-3 custom_card">
       <div className="d-flex justify-content-center">
         <Card.Img variant="top" src={avatar_url} className="rounded-circle w-50" />
       </div>
