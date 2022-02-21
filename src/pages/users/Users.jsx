@@ -52,8 +52,8 @@ export default function Users() {
 			<Header title="Find GitHub Users" />
 
 			<Container className="mb-4">
-				<Row className="mx-5 px-5">
-					<InputGroup>
+				<Row className="mx-0 px-0 mx-md-5 px-md-5">
+					<InputGroup className="px-0">
 						<InputGroup.Text id="basic-addon1" style={{ border: "2px solid aliceblue" }} className="bg-white">
 							<i className="bx bx-search h3 mb-0" style={{ color: '#b0b0b0' }}></i>
 						</InputGroup.Text>
