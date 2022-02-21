@@ -13,12 +13,12 @@ function App() {
             <div className="p-5 mb-4 bg-light rounded-3">
               <div className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">Welcome 👋</h1>
-                <img src="https://i.imgur.com/5f5GsU3.png" alt="astro mona" className="w-25 position-absolute top-0 end-0" />
+                <img src="https://i.imgur.com/5f5GsU3.png" alt="astro mona" className="position-absolute astro" />
               </div>
             </div>
           </div>
 					<div className="row align-items-md-stretch">
-						<div className="col-md-6">
+						<div className="col-md-6 my-3">
 							<div className="h-100 p-5 text-white bg-dark rounded-3">
 								<h2>Users</h2>
 								<p>
@@ -31,7 +31,7 @@ function App() {
 								</Link>
 							</div>
 						</div>
-						<div className="col-md-6">
+						<div className="col-md-6 my-3">
 							<div className="h-100 p-5 bg-light border rounded-3">
 								<h2>Repositories</h2>
 								<p>
