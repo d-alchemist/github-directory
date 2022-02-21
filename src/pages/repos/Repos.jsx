@@ -1,6 +1,7 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Container, FormControl, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import Header from "../../components/Header";
 import ReposBox from "../../components/ReposBox";
 import { clearRepoData, fetchMoreRepos, fetchRepos, goToNextPage, searchRepoData } from "../../store/actions/repoActions";
 import { debounce } from "../../utils/debounce";
@@ -45,9 +46,7 @@ export default function Repos() {
 
   return (
     <section className="container py-4">
-      <header className="pb-3 mb-4 text-center border-bottom">
-        <h1 className="h3">GitHub Repositories</h1>
-      </header>
+      <Header title="GitHub Repositories" />
       <Container className="mb-4">
 				<Row className="mx-5 px-5">
 					<InputGroup>

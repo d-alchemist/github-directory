@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, FormControl, InputGroup, Row } from 'react-bootstrap';
 import { fetchSearchData, fetchUsers, fetchMore, goToNextPage, clearUserData } from '../../store/actions/userActions';
 import { debounce } from '../../utils/debounce';
+import Header from '../../components/Header';
 
 const UsersBox = lazy(() => import('../../components/UsersBox'));
 
@@ -48,9 +49,7 @@ export default function Users() {
 
 	return (
 		<section className="container py-4">
-			<header className="pb-3 mb-4 text-center border-bottom">
-				<h1 className="h3">Find GitHub Users</h1>
-			</header>
+			<Header title="Find GitHub Users" />
 
 			<Container className="mb-4">
 				<Row className="mx-5 px-5">
