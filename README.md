@@ -1,6 +1,6 @@
 # GitHub Directory
 
-This project can be found on [My GitHub Directory](https://gitdirectory.herokuapp.com/).
+Live Deployment: [My GitHub Directory](https://gitdirectory.herokuapp.com/).
 
 ## Available Scripts
 
