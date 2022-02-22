@@ -5,7 +5,7 @@ const initialState = {
   error: "",
   repos: [],
   page: 1,
-  perPage: 100,
+  perPage: 30,
 };
 
 export default function reposReducer(state = initialState, {type, payload}) {
@@ -13,7 +13,7 @@ export default function reposReducer(state = initialState, {type, payload}) {
     case types.FETCH_REPOS:
       return {
         ...state,
-        repos: payload,
+        repos: [...state.repos, ...payload],
       }
 
     case types.SEARCH_REPOS:
@@ -34,7 +34,7 @@ export default function reposReducer(state = initialState, {type, payload}) {
         page: state.page + 1,
       }
 
-    case types.CLEAR_USER_DATA: 
+    case types.CLEAR_REPO_DATA: 
       return {
         ...state,
         repos: [],

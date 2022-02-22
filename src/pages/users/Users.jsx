@@ -1,25 +1,26 @@
-import { Suspense, useEffect, lazy, useState, useCallback, useRef } from 'react';
+import { Suspense, useEffect, lazy, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, FormControl, InputGroup, Row } from 'react-bootstrap';
 import { fetchSearchData, fetchUsers, fetchMore, goToNextPage, clearUserData } from '../../store/actions/userActions';
-import { debounce } from '../../utils/debounce';
 import Header from '../../components/Header';
+import useDebouncedInput from '../../hooks/useDebouncedInput';
 
 const UsersBox = lazy(() => import('../../components/UsersBox'));
 
 export default function Users() {
 	const dispatch = useDispatch();
 
-	const { loading, users, error } = useSelector((state) => state.users);
+	const { loading, users, error, perPage } = useSelector((state) => state.users);
 
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, debouncedOnChange] = useDebouncedInput();
 
   const observer = useRef();
+
+  const firstRender = useRef(true);
 
   const moreUsersRef = useCallback((node) => {
     if (loading) return;
     if (observer.current) observer.current.disconnect();
-
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         if (searchInput) {
@@ -36,16 +37,17 @@ export default function Users() {
 
 	useEffect(() => {
 		dispatch(fetchUsers());
-	}, [dispatch]);
+	}, [dispatch, perPage]);
 
-  const handleSearch = useCallback((e) => {
-    let input = e.target.value;
-    setSearchInput(input);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
     dispatch(clearUserData());
-    dispatch(fetchSearchData(input));
-  }, [dispatch]);
-
-  const debouncedOnChange = debounce(handleSearch, 1000);
+    dispatch(fetchSearchData(searchInput));
+  }, [searchInput, dispatch]);
 
 	return (
 		<section className="container py-4">

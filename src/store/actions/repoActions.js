@@ -4,13 +4,13 @@ import * as types from './action_types';
 export const fetchRepos = () => async (dispatch, getState) => {
 	dispatch({ type: types.SET_LOADING, payload: true });
 
-	const { repos: { page } } = getState();
+	const { repos: { page, perPage } } = getState();
 
 	try {
 		const { data } = await githubAPI.get('/repositories', {
-			params: { page },
+			params: { page, perPage },
 		});
-		console.log(data);
+		
 		dispatch({
 			type: types.FETCH_REPOS,
 			payload: data,
@@ -34,7 +34,7 @@ export const searchRepoData = (input) => async (dispatch, getState) => {
 
 	dispatch({ type: types.SET_LOADING, payload: true });
 
-	const { users: { perPage, page, } } = getState();
+	const { repos: { perPage, page, } } = getState();
 
 	try {
 		const { data: { items, total_count } } = await githubAPI.get('/search/repositories', {

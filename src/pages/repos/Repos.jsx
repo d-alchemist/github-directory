@@ -1,9 +1,9 @@
-import { Suspense, useCallback, useEffect, useRef, useState, lazy } from "react";
+import { Suspense, useCallback, useEffect, useRef, lazy } from "react";
 import { Container, FormControl, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
+import useDebouncedInput from "../../hooks/useDebouncedInput";
 import { clearRepoData, fetchMoreRepos, fetchRepos, goToNextPage, searchRepoData } from "../../store/actions/repoActions";
-import { debounce } from "../../utils/debounce";
 
 const ReposBox = lazy(() => import("../../components/ReposBox"));
 
@@ -11,7 +11,10 @@ export default function Repos() {
   const dispatch = useDispatch();
 
   const {loading, repos, error, page} = useSelector((state) => state.repos);
-  const [searchInput, setSearchInput] = useState("");
+  
+  const [searchInput, debouncedOnChange] = useDebouncedInput();
+
+  const firstRender = useRef(true);
 
   const observer = useRef();
 
@@ -37,14 +40,15 @@ export default function Repos() {
     dispatch(fetchRepos());
   }, [dispatch, page]);
 
-  const handleTextInput = useCallback((e) => {
-    const inputText = e.target.value;
-    setSearchInput(inputText);
-    dispatch(clearRepoData());
-    dispatch(searchRepoData(inputText));
-  }, [dispatch]);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
 
-  const debouncedOnChange = debounce(handleTextInput, 1000);
+    dispatch(clearRepoData());
+    dispatch(searchRepoData(searchInput));
+  }, [searchInput, dispatch]);
 
   return (
     <section className="container py-4">
@@ -57,7 +61,7 @@ export default function Repos() {
 						</InputGroup.Text>
 						<FormControl
 							placeholder="Enter repository"
-							aria-label="Username"
+							aria-label="RepositoryName"
 							aria-describedby="basic-addon1"
 							className="border-start-0"
               autoFocus
