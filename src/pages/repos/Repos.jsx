@@ -1,13 +1,15 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState, lazy } from "react";
 import { Container, FormControl, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
-import ReposBox from "../../components/ReposBox";
 import { clearRepoData, fetchMoreRepos, fetchRepos, goToNextPage, searchRepoData } from "../../store/actions/repoActions";
 import { debounce } from "../../utils/debounce";
 
+const ReposBox = lazy(() => import("../../components/ReposBox"));
+
 export default function Repos() {
   const dispatch = useDispatch();
+
   const {loading, repos, error, page} = useSelector((state) => state.repos);
   const [searchInput, setSearchInput] = useState("");
 
@@ -38,7 +40,7 @@ export default function Repos() {
   const handleTextInput = useCallback((e) => {
     const inputText = e.target.value;
     setSearchInput(inputText);
-    clearRepoData();
+    dispatch(clearRepoData());
     dispatch(searchRepoData(inputText));
   }, [dispatch]);
 

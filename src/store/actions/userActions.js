@@ -1,25 +1,6 @@
 import { githubAPI } from "../../utils/axios";
 import * as types from "./action_types";
 
-export const fetchRepos = () => async (dispatch) => {
-  dispatch({type: types.SET_LOADING, payload: true});
-  try {
-    const { data } = await githubAPI.get("/repositories");
-    dispatch({
-      type: types.FETCH_REPOS,
-      payload: data,
-    })
-  } catch(error) {
-    dispatch({
-      type: types.FETCH_REPOS_ERROR,
-      payload: error,
-    });
-    console.error(error);
-  } finally {
-    dispatch({type: types.SET_LOADING, payload: false});
-  }
-}
-
 export const fetchUsers = () => async (dispatch, getState) => {
   dispatch({type: types.SET_LOADING, payload: true});
 
@@ -46,31 +27,30 @@ export const fetchUsers = () => async (dispatch, getState) => {
 }
 
 export const fetchSearchData = (input) => async (dispatch, getState) => {
-  dispatch({type: types.SET_LOADING, payload: true});
-  
   if (!input) {
     dispatch({type: types.SET_ERROR, payload: "Please enter search parameter"});
     return;
   }
 
+  dispatch({type: types.SET_LOADING, payload: true});
+
   const { users: { perPage, page } } = getState();
 
-
   try {
-    const { data: { items } } = await githubAPI.get("/search/users", {
+    const { data: { items, total_count } } = await githubAPI.get("/search/users", {
         params: { q: input, page, perPage },
       }
     );
+
+    if (total_count === 0) {
+      dispatch({type: types.SET_ERROR, payload: "User does not exist"});
+    }
 
     if (items.length) {
       dispatch({
         type: types.SEARCH_USERS,
         payload: items,
       });
-    }
-
-    if (!items.length) {
-      dispatch({type: types.SET_ERROR, payload: "User does not exist"});
     }
     
   } catch(error) {

@@ -1,12 +1,12 @@
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
+export const GO_TO_NEXT_PAGE = 'GO_TO_NEXT_PAGE';
 
 // USER
 export const FETCH_USERS = 'FETCH_USERS';
 export const FETCH_USER_ERROR = 'FETCH_USER_ERROR';
 export const SEARCH_USERS = 'SEARCH_USERS';
 export const FETCH_MORE_USERS = 'FETCH_MORE_USERS';
-export const GO_TO_NEXT_PAGE = 'GO_TO_NEXT_PAGE';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
 
 // REPO
@@ -14,3 +14,4 @@ export const FETCH_REPOS = 'FETCH_REPOS';
 export const FETCH_REPOS_ERROR = 'FETCH_REPOS_ERROR';
 export const CLEAR_REPO_DATA = 'CLEAR_REPO_DATA';
 export const FETCH_MORE_REPOS = 'FETCH_MORE_REPOS';
+export const SEARCH_REPOS = 'SEARCH_REPOS';

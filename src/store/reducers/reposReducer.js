@@ -13,13 +13,13 @@ export default function reposReducer(state = initialState, {type, payload}) {
     case types.FETCH_REPOS:
       return {
         ...state,
-        repos: [...state.repos, ...payload],
+        repos: payload,
       }
 
-    case types.SEARCH_USERS:
+    case types.SEARCH_REPOS:
       return {
         ...state,
-        repos: payload,
+        repos: [...state.repos, ...payload],
       }
 
     case types.FETCH_MORE_REPOS:

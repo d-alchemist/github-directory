@@ -4,7 +4,7 @@ import RepoCard from "./RepoCard";
 
 export default function ReposBox({repos, loading, error, moreReposRef}) {
   return (
-    <div>
+    <>
       <Row>
         {
           repos && repos.map((repo, index) => {
@@ -25,6 +25,6 @@ export default function ReposBox({repos, loading, error, moreReposRef}) {
       </Row>
       {loading && <Loader />}
       {error && <p>{error}</p>}
-    </div>
+    </>
   )
 }

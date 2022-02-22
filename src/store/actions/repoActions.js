@@ -27,23 +27,28 @@ export const fetchRepos = () => async (dispatch, getState) => {
 };
 
 export const searchRepoData = (input) => async (dispatch, getState) => {
+	if (!input) {
+    dispatch({type: types.SET_ERROR, payload: "Please enter search parameter"});
+    return;
+  }
+
 	dispatch({ type: types.SET_LOADING, payload: true });
 
 	const { users: { perPage, page, } } = getState();
 
 	try {
-		const { data: { items } } = await githubAPI.get('/search/repositories', {
+		const { data: { items, total_count } } = await githubAPI.get('/search/repositories', {
 			params: { q: input, page, perPage },
 		});
 
 		if (items.length) {
 			dispatch({
-				type: types.SEARCH_USERS,
+				type: types.SEARCH_REPOS,
 				payload: items,
 			});
 		}
 
-		if (!items.length) {
+		if (total_count === 0) {
 			dispatch({ type: types.SET_ERROR, payload: 'repository does not exist' });
 		}
 
@@ -51,6 +56,7 @@ export const searchRepoData = (input) => async (dispatch, getState) => {
 			type: types.FETCH_REPOS,
 			payload: items,
 		});
+
 	} catch (error) {
 		dispatch({
 			type: types.FETCH_REPOS_ERROR,
