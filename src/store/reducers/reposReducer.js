@@ -5,7 +5,7 @@ const initialState = {
   error: "",
   repos: [],
   page: 1,
-  perPage: 30,
+  perPage: 100,
 };
 
 export default function reposReducer(state = initialState, {type, payload}) {
@@ -39,7 +39,7 @@ export default function reposReducer(state = initialState, {type, payload}) {
         ...state,
         repos: [],
         page: 1,
-        perPage: 30,
+        perPage: 100,
         error: "",
       }
 
