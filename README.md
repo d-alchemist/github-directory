@@ -2,6 +2,10 @@
 
 Live Deployment: [My GitHub Directory](https://gitdirectory.herokuapp.com/).
 
+## Image
+
+![image](https://user-images.githubusercontent.com/30834215/155163703-01c05779-12d5-4e4b-9670-82b642b61f52.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -26,3 +30,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
